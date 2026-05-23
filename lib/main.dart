@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Replace these with your actual Supabase URL and anon key.
+  // Using placeholder values here as requested.
+  await Supabase.initialize(
+    url: 'https://YOUR_SUPABASE_URL.supabase.co',
+    anonKey: 'YOUR_SUPABASE_ANON_KEY',
+  );
+
   runApp(const MyApp());
 }
 
@@ -32,22 +42,42 @@ class _StatTrackerHomeState extends State<StatTrackerHome> {
   int _pushups = 0;
   int _pagesRead = 0;
 
+  // Provide a getter to access Supabase instance.
+  final supabase = Supabase.instance.client;
+
+  // Placeholder logic to demonstrate how you might update Supabase.
+  // E.g.
+  // Future<void> _updateSupabaseStat(String statName, int newValue) async {
+  //   try {
+  //     await supabase.from('stats').upsert({
+  //       'user_id': supabase.auth.currentUser?.id,
+  //       'stat_name': statName,
+  //       'stat_value': newValue,
+  //     });
+  //   } catch (error) {
+  //     debugPrint('Error updating stat: \$error');
+  //   }
+  // }
+
   void _incrementWater() {
     setState(() {
       _waterGlasses++;
     });
+    // _updateSupabaseStat('water', _waterGlasses);
   }
 
   void _incrementPushups() {
     setState(() {
       _pushups += 10;
     });
+    // _updateSupabaseStat('pushups', _pushups);
   }
 
   void _incrementPages() {
     setState(() {
       _pagesRead += 5;
     });
+    // _updateSupabaseStat('reading', _pagesRead);
   }
 
   @override
